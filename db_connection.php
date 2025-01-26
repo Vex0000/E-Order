@@ -1,13 +1,14 @@
 <?php
 
-$servername = "localhost";
-$dbusername = "root";
-$dbpassword = "";
-$dbname = "eorder";
+require 'vendor/autoload.php'; 
 
-$conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+$uri = "mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority";  
+$client = new MongoDB\Client($uri); 
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$db = $client->eorder;  
+
+$collection = $db->eorder; 
+
+echo "Connected to MongoDB successfully!";
+
 ?>
