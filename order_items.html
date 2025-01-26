@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Items</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, select, input, button {
+            display: block;
+            margin-bottom: 15px;
+        }
+    </style>
+    <script>
+        const itemPrices = {
+            "Computer": 1000,
+            "Tablet": 500,
+            "Phone": 800,
+            "Widget": 50,
+            "Chocolate": 10
+        };
+
+        function updatePrice() {
+            const itemName = document.getElementById("itemName").value;
+            const quantity = document.getElementById("quantity").value || 1; 
+            const priceField = document.getElementById("price");
+
+            const pricePerUnit = itemPrices[itemName] || 0;
+            priceField.value = pricePerUnit * quantity;
+        }
+
+        document.getElementById("quantity").addEventListener("input", updatePrice);
+    </script>
+</head>
+<body>
+    <h1>Order Items</h1>
+    <!-- Action points to the PHP file for form processing -->
+    <form id="orderForm" action="add_order_item.php" method="POST">
+        <label for="orderID">Order ID:</label>
+        <input type="text" id="orderID" name="orderID" value="" placeholder="Order ID will be generated if not provided" readonly>
+
+        <label for="itemName">Item Name:</label>
+        <select id="itemName" name="itemName" onchange="updatePrice()" required>
+            <option value="" disabled selected>Select an item</option>
+            <option value="Computer">Computer</option>
+            <option value="Tablet">Tablet</option>
+            <option value="Phone">Phone</option>
+            <option value="Widget">Widget</option>
+            <option value="Chocolate">Chocolate</option>
+        </select>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" min="1" onchange="updatePrice()" required>
+
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price" readonly>
+
+        <button type="submit">Add Item</button>
+    </form>
+
+    <div id="confirmationMessage" style="margin-top: 20px; font-weight: bold;"></div>
+</body>
+<a href="index.html">Back to Main Menu</a>
+</html>
